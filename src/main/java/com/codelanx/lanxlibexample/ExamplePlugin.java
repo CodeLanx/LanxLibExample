@@ -23,14 +23,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class ExamplePlugin extends JavaPlugin {
 
     private ConfigurationLoader config;
-    private ListenerManager listener;
+    private ListenerManager<ExamplePlugin> listener;
 
     @Override
     public void onEnable() {
         this.config = new ConfigurationLoader(this, ConfigValue.class);
         
-        this.listener = new ListenerManager(this);
+        this.getLogger().log(Level.INFO, "Loading listener example...");
+        this.listener = new ListenerManager<>(this);
         this.listener.registerListener(new ExampleListener(this));
+        if (this.listener.isRegistered(ExampleListener.class)) {
+            this.getLogger().log(Level.INFO, "{0} is registered!", ExampleListener.class.getName());
+        }
+        ExampleListener lis = this.listener.getListener(ExampleListener.class);
+        if (lis != null) {
+            this.getLogger().log(Level.INFO, "{0} successfully retrieved from manager!", ExampleListener.class.getName());
+        }
     }
 
     @Override

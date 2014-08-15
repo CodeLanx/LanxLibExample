@@ -20,7 +20,7 @@
 package com.codelanx.lanxlibexample.listener;
 
 import com.codelanx.codelanxlib.listener.SubListener;
-import com.codelanx.lanxlibexample.ExamplePlugin;
+import com.codelanx.lanxlibexample.LanxLibExample;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -31,9 +31,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
  * @author 1Rogue
  * @version 1.0.0
  */
-public class ExampleListener extends SubListener<ExamplePlugin> {
+public class ExampleListener extends SubListener<LanxLibExample> {
 
-    public ExampleListener(ExamplePlugin plugin) {
+    public ExampleListener(LanxLibExample plugin) {
         super(plugin);
     }
 

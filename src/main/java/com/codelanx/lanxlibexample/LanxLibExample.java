@@ -1,18 +1,30 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2015 Codelanx, All Rights Reserved
+ *
+ * This work is licensed under a Creative Commons
+ * Attribution-NonCommercial-NoDerivs 3.0 Unported License.
+ *
+ * This program is protected software: You are free to distrubute your
+ * own use of this software under the terms of the Creative Commons BY-NC-ND
+ * license as published by Creative Commons in the year 2015 or as published
+ * by a later date. You may not provide the source files or provide a means
+ * of running the software outside of those licensed to use it.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * You should have received a copy of the Creative Commons BY-NC-ND license
+ * long with this program. If not, see <https://creativecommons.org/licenses/>.
  */
 package com.codelanx.lanxlibexample;
 
-import com.codelanx.codelanxlib.config.ConfigurationLoader;
 import com.codelanx.codelanxlib.listener.ListenerManager;
 import com.codelanx.codelanxlib.util.CoverageUtil;
 import com.codelanx.codelanxlib.util.CoverageUtil.Coverage;
+import com.codelanx.codelanxlib.util.DebugUtil;
 import com.codelanx.lanxlibexample.config.ConfigValue;
 import com.codelanx.lanxlibexample.listener.ExampleListener;
-import java.io.IOException;
-import java.util.logging.Level;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -24,7 +36,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class LanxLibExample extends JavaPlugin {
 
-    private ConfigurationLoader config;
     private ListenerManager<LanxLibExample> listener;
 
     @Override
@@ -32,21 +43,21 @@ public class LanxLibExample extends JavaPlugin {
     public void onEnable() {
         CoverageUtil.load(this);
         CoverageUtil.registerClasses(this, LanxLibExample.class);
-        this.config = new ConfigurationLoader(this, ConfigValue.class);
         
-        this.getLogger().log(Level.INFO, "Loading listener example...");
+        DebugUtil.print("Example config value: %s", ConfigValue.EXAMPLE_VALUE.as(String.class));
+        DebugUtil.print("Loading listener example...");
         this.listener = new ListenerManager<>(this);
         this.listener.registerListener(new ExampleListener(this));
         if (this.listener.isRegistered(ExampleListener.class)) {
             CoverageUtil.marker(this);
-            this.getLogger().log(Level.INFO, "{0} is registered!", ExampleListener.class.getName());
+            DebugUtil.print("%s is registered!", ExampleListener.class.getName());
         }
         ExampleListener lis = this.listener.getListener(ExampleListener.class);
         if (lis != null) {
-            if (false) {
+            if (false) { //Example of not-activated marker
                 CoverageUtil.marker(this);
             }
-            this.getLogger().log(Level.INFO, "{0} successfully retrieved from manager!", ExampleListener.class.getName());
+            DebugUtil.print("%s successfully retrieved from manager!", ExampleListener.class.getName());
         }
         CoverageUtil.marker(this);
     }
@@ -54,11 +65,6 @@ public class LanxLibExample extends JavaPlugin {
     @Override
     public void onDisable() {
         this.listener.cleanup();
-        try {
-            this.config.saveConfig();
-        } catch (IOException ex) {
-            this.getLogger().log(Level.SEVERE, "Error saving config values!");
-        }
     }
 
 }

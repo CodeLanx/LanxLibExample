@@ -17,31 +17,53 @@
  * You should have received a copy of the Creative Commons BY-NC-ND license
  * long with this program. If not, see <https://creativecommons.org/licenses/>.
  */
-package com.codelanx.lanxlibexample.listener;
+package com.codelanx.lanxlibexample;
 
 import com.codelanx.codelanxlib.config.lang.Lang;
-import com.codelanx.codelanxlib.listener.SubListener;
-import com.codelanx.lanxlibexample.LanxLibExample;
-import com.codelanx.lanxlibexample.MyLang;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerJoinEvent;
+import com.codelanx.codelanxlib.data.types.Yaml;
 
 /**
- * Class description for {@link ExampleListener}
+ * Class description for {@link MyLang}
  *
  * @since 1.0.0
  * @author 1Rogue
  * @version 1.0.0
  */
-public class ExampleListener extends SubListener<LanxLibExample> {
+public enum MyLang implements Lang<MyLang> {
 
-    public ExampleListener(LanxLibExample plugin) {
-        super(plugin);
+    HELLO_WORLD("hello-world", "Hello world from %s!"),
+    FORMAT("format", "[&9LanxLibExample&f] %s");
+
+    private static Yaml yaml;
+    private final String path;
+    private final String def;
+    
+    private MyLang(String path, String def) {
+        this.path = path;
+        this.def = def;
     }
 
-    @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-        Lang.sendMessage(event.getPlayer(), MyLang.HELLO_WORLD, this.plugin.getName());
+    @Override
+    public String getPath() {
+        return this.path;
+    }
+
+    @Override
+    public String getDefault() {
+        return this.def;
+    }
+
+    @Override
+    public Yaml getConfig() {
+        if (MyLang.yaml == null) {
+            MyLang.yaml = this.init(Yaml.class);
+        }
+        return MyLang.yaml;
+    }
+
+    @Override
+    public Lang getFormat() {
+        return MyLang.FORMAT;
     }
 
 }

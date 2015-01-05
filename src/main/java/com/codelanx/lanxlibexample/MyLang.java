@@ -19,6 +19,8 @@
  */
 package com.codelanx.lanxlibexample;
 
+import com.codelanx.codelanxlib.annotation.PluginClass;
+import com.codelanx.codelanxlib.annotation.RelativePath;
 import com.codelanx.codelanxlib.config.lang.Lang;
 import com.codelanx.codelanxlib.data.types.Yaml;
 
@@ -29,6 +31,8 @@ import com.codelanx.codelanxlib.data.types.Yaml;
  * @author 1Rogue
  * @version 1.0.0
  */
+@PluginClass(LanxLibExample.class)
+@RelativePath("lang.yml")
 public enum MyLang implements Lang<MyLang> {
 
     HELLO_WORLD("hello-world", "Hello world from %s!"),

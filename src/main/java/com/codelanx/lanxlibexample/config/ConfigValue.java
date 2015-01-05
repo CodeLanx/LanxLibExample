@@ -19,8 +19,11 @@
  */
 package com.codelanx.lanxlibexample.config;
 
+import com.codelanx.codelanxlib.annotation.PluginClass;
+import com.codelanx.codelanxlib.annotation.RelativePath;
 import com.codelanx.codelanxlib.config.Config;
 import com.codelanx.codelanxlib.data.types.Yaml;
+import com.codelanx.lanxlibexample.LanxLibExample;
 
 
 /**
@@ -30,6 +33,8 @@ import com.codelanx.codelanxlib.data.types.Yaml;
  * @author 1Rogue
  * @version 1.0.0
  */
+@PluginClass(LanxLibExample.class)
+@RelativePath("config.yml")
 public enum ConfigValue implements Config<ConfigValue> {
     
     EXAMPLE_VALUE("example", "test"),
